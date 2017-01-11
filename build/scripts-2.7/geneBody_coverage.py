@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/nfs/users/nfs_s/sb43/software/anaconda/bin/python
 '''
 Calculate the RNA-seq reads coverage over gene body. 
 
@@ -26,7 +26,7 @@ from os.path import basename
 import operator
 
 #import third-party modules
-from numpy import std,mean,count_nonzero
+from numpy import std,mean
 from bx.bitset import *
 from bx.bitset_builders import *
 from bx.intervals import *
@@ -280,9 +280,8 @@ def main():
 		f = line.split()
 		name = f[0]
 		dat = [float(i) for i in  f[1:]]
-		if count_nonzero(dat) > 0:
-			skewness = pearson_moment_coefficient(dat)
-			dataset.append((name, [(i -min(dat))/(max(dat) - min(dat)) for i in dat], skewness))	
+		skewness = pearson_moment_coefficient(dat)
+		dataset.append((name, [(i -min(dat))/(max(dat) - min(dat)) for i in dat], skewness))	
 	dataset.sort(key = operator.itemgetter(2), reverse=True)
 	
 	print >>sys.stderr, "\n\n"
